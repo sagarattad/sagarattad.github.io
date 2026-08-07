@@ -1,0 +1,735 @@
+/* ================================
+   CSS Variables (Light & Dark Mode)
+   ================================ */
+:root {
+  /* Light Mode Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a4a68;
+  --accent: #0077b6;
+  --accent-hover: #005f8a;
+  --border: #e1e4e8;
+  --card-bg: #ffffff;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --tag-bg: #e8f4f8;
+  --tag-text: #0077b6;
+  --code-bg: #f6f8fa;
+}
+
+[data-theme="dark"] {
+  /* Dark Mode Colors */
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16162a;
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0b0;
+  --accent: #00b4d8;
+  --accent-hover: #48cae4;
+  --border: #2d2d44;
+  --card-bg: #22223a;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --tag-bg: #0d3d4d;
+  --tag-text: #00b4d8;
+  --code-bg: #2d2d44;
+}
+
+/* ================================
+   Reset & Base Styles
+   ================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ================================
+   Layout
+   ================================ */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.site-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  padding: 40px 0;
+}
+
+/* ================================
+   Header & Navigation
+   ================================ */
+.site-header {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  background-color: var(--bg-primary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.site-title:hover {
+  color: var(--accent);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.site-nav a {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.site-nav a:hover {
+  color: var(--accent);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: background-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background-color: var(--bg-secondary);
+}
+
+.theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mobile Menu */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--text-primary);
+}
+
+/* ================================
+   Hero / Intro Section
+   ================================ */
+.hero {
+  padding: 60px 0 40px;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: var(--text-primary);
+}
+
+.hero .tagline {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.hero .bio {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* ================================
+   Section Titles
+   ================================ */
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 50px 0 25px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background-color: var(--border);
+}
+
+/* ================================
+   Post Cards
+   ================================ */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.post-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 25px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.post-card:hover {
+  box-shadow: var(--card-shadow);
+  transform: translateY(-2px);
+}
+
+.post-card .post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.post-card .tag {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 15px;
+  text-transform: uppercase;
+}
+
+.post-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+.post-card h3 a {
+  color: var(--text-primary);
+}
+
+.post-card h3 a:hover {
+  color: var(--accent);
+}
+
+.post-card .post-meta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.post-card .post-excerpt {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ================================
+   Project Cards
+   ================================ */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.project-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 25px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.project-card:hover {
+  box-shadow: var(--card-shadow);
+  transform: translateY(-2px);
+}
+
+.project-card .project-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.project-card .project-icon {
+  font-size: 1.5rem;
+}
+
+.project-card h3 {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.project-card .project-description {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.project-card .project-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-card .project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-card .tag {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 15px;
+}
+
+.project-card .project-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.project-card .project-link:hover {
+  color: var(--accent-hover);
+}
+
+/* ================================
+   About Page
+   ================================ */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.about-header {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.about-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+}
+
+.about-intro h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.about-intro .title {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.about-body {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+.about-body p {
+  margin-bottom: 20px;
+}
+
+.about-body h2 {
+  font-size: 1.3rem;
+  color: var(--text-primary);
+  margin: 35px 0 15px;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.skills-list .skill {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+/* ================================
+   Contact Page
+   ================================ */
+.contact-content {
+  max-width: 600px;
+}
+
+.contact-content h1 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.contact-content .intro {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-bottom: 35px;
+  line-height: 1.8;
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.contact-link:hover {
+  box-shadow: var(--card-shadow);
+  transform: translateY(-2px);
+}
+
+.contact-link .icon {
+  font-size: 1.5rem;
+}
+
+.contact-link .details h3 {
+  font-size: 1rem;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.contact-link .details p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* ================================
+   Blog Post Page
+   ================================ */
+.post-header {
+  margin-bottom: 40px;
+}
+
+.post-header .post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.post-header .tag {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 15px;
+  text-transform: uppercase;
+}
+
+.post-header h1 {
+  font-size: 2.2rem;
+  line-height: 1.3;
+  margin-bottom: 15px;
+}
+
+.post-header .post-meta {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.post-content {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+.post-content h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin: 45px 0 20px;
+}
+
+.post-content h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin: 35px 0 15px;
+}
+
+.post-content p {
+  margin-bottom: 20px;
+}
+
+.post-content ul,
+.post-content ol {
+  margin: 20px 0;
+  padding-left: 25px;
+}
+
+.post-content li {
+  margin-bottom: 10px;
+}
+
+.post-content code {
+  background-color: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: "Fira Code", "Consolas", monospace;
+}
+
+.post-content pre {
+  background-color: var(--code-bg);
+  padding: 20px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 25px 0;
+}
+
+.post-content pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.post-content blockquote {
+  border-left: 4px solid var(--accent);
+  padding-left: 20px;
+  margin: 25px 0;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.post-content img {
+  border-radius: 8px;
+  margin: 25px 0;
+}
+
+.post-footer {
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
+}
+
+.post-footer .author {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ================================
+   Blog Page
+   ================================ */
+.blog-header {
+  margin-bottom: 40px;
+}
+
+.blog-header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.blog-header p {
+  color: var(--text-secondary);
+}
+
+/* Category Filter */
+.category-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.category-filter button {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.category-filter button:hover,
+.category-filter button.active {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+}
+
+/* ================================
+   Footer
+   ================================ */
+.site-footer {
+  padding: 30px 0;
+  border-top: 1px solid var(--border);
+  background-color: var(--bg-primary);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-copyright {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+.footer-links svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ================================
+   Responsive Design
+   ================================ */
+@media (max-width: 768px) {
+  .header-content {
+    flex-wrap: wrap;
+  }
+
+  .site-nav {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 20px;
+  }
+
+  .site-nav.active {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+
+  .about-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .post-header h1 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .hero {
+    padding: 40px 0 30px;
+  }
+
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+
+  .post-card {
+    padding: 20px;
+  }
+
+  .project-card {
+    padding: 20px;
+  }
+}

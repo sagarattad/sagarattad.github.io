@@ -1,0 +1,65 @@
+---
+layout: default
+title: Blog
+---
+
+<div class="blog-header">
+  <h1>Blog</h1>
+  <p>Thoughts on SAP, tech, and life.</p>
+</div>
+
+<!-- Category Filter -->
+<div class="category-filter">
+  <button class="active" onclick="filterPosts('all')">All</button>
+  <button onclick="filterPosts('ABAP')">ABAP</button>
+  <button onclick="filterPosts('RAP')">RAP</button>
+  <button onclick="filterPosts('CDS')">CDS</button>
+  <button onclick="filterPosts('HANA')">HANA</button>
+  <button onclick="filterPosts('BTP')">BTP</button>
+  <button onclick="filterPosts('Career')">Career</button>
+  <button onclick="filterPosts('Tech')">Tech</button>
+  <button onclick="filterPosts('Life')">Life</button>
+</div>
+
+<!-- Posts List -->
+<div class="post-list">
+  {% for post in site.posts %}
+  <article class="post-card" data-categories="{{ post.categories | join: ' ' }}">
+    <div class="post-tags">
+      {% for category in post.categories %}
+      <span class="tag">{{ category }}</span>
+      {% endfor %}
+    </div>
+    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+    <p class="post-meta">
+      {{ post.date | date: "%B %d, %Y" }}
+      {% if post.read_time %} · {{ post.read_time }} min read{% endif %}
+    </p>
+    <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 150 }}</p>
+  </article>
+  {% endfor %}
+  
+  {% if site.posts.size == 0 %}
+  <p style="color: var(--text-secondary);">Blog posts coming soon!</p>
+  {% endif %}
+</div>
+
+<script>
+  function filterPosts(category) {
+    // Update active button
+    const buttons = document.querySelectorAll('.category-filter button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filter posts
+    const posts = document.querySelectorAll('.post-card');
+    posts.forEach(post => {
+      const categories = post.getAttribute('data-categories');
+      if (category === 'all' || categories.includes(category)) {
+        post.style.display = 'block';
+      } else {
+        post.style.display = 'none';
+      }
+    });
+  }
+</script>
