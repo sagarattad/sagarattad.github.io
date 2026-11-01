@@ -3,80 +3,77 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="{{ page.description | default: site.description }}">
-  <title>{% if page.title %}{{ page.title }} | {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
-  
+
+  <!-- Apply saved / system theme before first paint (avoids a flash) -->
+  <script>
+    (function () {
+      var theme;
+      try { theme = localStorage.getItem('theme'); } catch (e) {}
+      if (!theme) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..600,100;1,9..144,400..600,100&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+
   <!-- Styles -->
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-  
-  <!-- Favicon (optional - add later) -->
-  <!-- <link rel="icon" href="{{ '/assets/images/favicon.ico' | relative_url }}"> -->
-  
+  <!-- ?v= changes on every build so browsers never use a stale stylesheet -->
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
+
+  <!-- Favicons -->
+  <link rel="icon" href="{{ '/assets/images/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="icon" href="{{ '/assets/images/favicon-32.png' | relative_url }}" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="{{ '/assets/images/apple-touch-icon.png' | relative_url }}">
+  <meta name="theme-color" content="#faf9f6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#191816" media="(prefers-color-scheme: dark)">
+
+  <!-- Title, description and social preview cards -->
   {% seo %}
+  {% feed_meta %}
 </head>
 <body>
   <div class="site-wrapper">
-    
+
     {% include header.html %}
-    
+
     <main>
       <div class="container">
         {{ content }}
       </div>
     </main>
-    
+
     {% include footer.html %}
-    
+
   </div>
-  
-  <!-- Theme Toggle Script -->
+
   <script>
-    // Check for saved theme preference or default to light
-    const getTheme = () => {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        return savedTheme;
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    };
+    // Toggle light / dark theme
+    function toggleTheme() {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    }
 
-    // Apply theme
-    const setTheme = (theme) => {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-      updateToggleIcon(theme);
-    };
-
-    // Update toggle button icon
-    const updateToggleIcon = (theme) => {
-      const sunIcon = document.querySelector('.sun-icon');
-      const moonIcon = document.querySelector('.moon-icon');
-      if (sunIcon && moonIcon) {
-        if (theme === 'dark') {
-          sunIcon.style.display = 'block';
-          moonIcon.style.display = 'none';
-        } else {
-          sunIcon.style.display = 'none';
-          moonIcon.style.display = 'block';
-        }
-      }
-    };
-
-    // Initialize theme
-    setTheme(getTheme());
-
-    // Toggle theme
-    const toggleTheme = () => {
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      setTheme(newTheme);
-    };
+    // Keep "years of experience" current between builds (see _includes/experience.html)
+    document.querySelectorAll('.experience[data-since]').forEach(function (el) {
+      var parts = el.dataset.since.split('-');
+      var now = new Date();
+      var months = (now.getFullYear() * 12 + now.getMonth() + 1) - (parts[0] * 12 + Number(parts[1]));
+      var halfYears = Math.floor(months / 6);
+      el.textContent = Math.floor(halfYears / 2) + (halfYears % 2 ? '.5' : '');
+    });
 
     // Mobile menu toggle
-    const toggleMenu = () => {
-      const nav = document.querySelector('.site-nav');
-      nav.classList.toggle('active');
-    };
+    function toggleMenu() {
+      var nav = document.querySelector('.site-nav');
+      var open = nav.classList.toggle('active');
+      document.querySelector('.menu-toggle').setAttribute('aria-expanded', open);
+    }
   </script>
 </body>
 </html>

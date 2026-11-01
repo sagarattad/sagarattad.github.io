@@ -2,33 +2,171 @@
 layout: default
 ---
 
+<div class="progress-bar" aria-hidden="true"></div>
+
 <article class="post">
-  
+
   <header class="post-header">
-    {% if page.categories %}
-    <div class="post-tags">
+    {% if page.categories.size > 0 %}
+    <div class="tags">
       {% for category in page.categories %}
       <span class="tag">{{ category }}</span>
       {% endfor %}
     </div>
     {% endif %}
-    
+
     <h1>{{ page.title }}</h1>
-    
+
+    {% if page.description %}
+    <p class="lead">{{ page.description }}</p>
+    {% endif %}
+
     <p class="post-meta">
-      {{ page.date | date: "%B %d, %Y" }}
-      {% if page.read_time %}
-       · {{ page.read_time }} min read
-      {% endif %}
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %-d, %Y" }}</time>
+      · {% include read-time.html post=page %}
     </p>
   </header>
-  
+
+  {% unless page.toc == false %}
+  <!-- Filled in by the script below on posts with 4+ sections; add `toc: false` to a post to turn it off -->
+  <nav class="toc" aria-label="On this page" hidden>
+    <p class="eyebrow">On this page</p>
+    <ol></ol>
+  </nav>
+  {% endunless %}
+
   <div class="post-content">
     {{ content }}
   </div>
-  
+
   <footer class="post-footer">
-    <p class="author">Written by {{ site.author.first_name }}</p>
+    <div class="author-card">
+      {% include avatar.html size="sm" %}
+      <div>
+        <span class="name">{{ site.author.name }}</span>
+        <p>{{ site.tagline }}</p>
+      </div>
+    </div>
+
+    {% if page.previous or page.next %}
+    <nav class="post-nav" aria-label="More posts">
+      {% if page.previous %}
+      <a class="prev" href="{{ page.previous.url | relative_url }}">
+        <span class="eyebrow">← Previous</span>
+        <span class="title">{{ page.previous.title }}</span>
+      </a>
+      {% endif %}
+      {% if page.next %}
+      <a class="next" href="{{ page.next.url | relative_url }}">
+        <span class="eyebrow">Next →</span>
+        <span class="title">{{ page.next.title }}</span>
+      </a>
+      {% endif %}
+    </nav>
+    {% endif %}
   </footer>
-  
+
 </article>
+
+<script>
+  (function () {
+    // Reading progress bar
+    var bar = document.querySelector('.progress-bar');
+    var article = document.querySelector('.post');
+    function updateProgress() {
+      var total = article.offsetTop + article.offsetHeight - window.innerHeight;
+      var progress = total > 0 ? Math.min(Math.max(window.scrollY / total, 0), 1) : 1;
+      bar.style.transform = 'scaleX(' + progress + ')';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    updateProgress();
+
+    // Table of contents for longer posts
+    var toc = document.querySelector('.toc');
+    var sections = document.querySelectorAll('.post-content h2[id]');
+    if (toc && sections.length >= 4) {
+      var list = toc.querySelector('ol');
+      sections.forEach(function (heading) {
+        var item = document.createElement('li');
+        var link = document.createElement('a');
+        link.href = '#' + heading.id;
+        link.textContent = heading.textContent;
+        item.appendChild(link);
+        list.appendChild(item);
+      });
+      toc.hidden = false;
+    }
+
+    // Click to enlarge images that are shown smaller than their real size
+    var lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-label', 'Enlarged image');
+    lightbox.hidden = true;
+    lightbox.innerHTML = '<img alt=""><button type="button" class="lightbox-close" aria-label="Close">×</button>';
+    document.body.appendChild(lightbox);
+    var lightboxImg = lightbox.querySelector('img');
+
+    function closeLightbox() {
+      lightbox.hidden = true;
+      document.documentElement.classList.remove('lightbox-open');
+    }
+    lightbox.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+    });
+
+    document.querySelectorAll('.post-content img').forEach(function (img) {
+      if (img.closest('a')) return;
+      function setup() {
+        if (img.naturalWidth <= img.clientWidth + 8) return;  // already full size
+        img.classList.add('zoomable');
+        img.tabIndex = 0;
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', (img.alt || 'Image') + ' (click to enlarge)');
+        function open() {
+          lightboxImg.src = img.currentSrc || img.src;
+          lightboxImg.alt = img.alt;
+          lightbox.hidden = false;
+          document.documentElement.classList.add('lightbox-open');
+        }
+        img.addEventListener('click', open);
+        img.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); }
+        });
+      }
+      if (img.complete) setup(); else img.addEventListener('load', setup);
+    });
+
+    // Anchor links on headings
+    document.querySelectorAll('.post-content h2[id], .post-content h3[id]').forEach(function (heading) {
+      var link = document.createElement('a');
+      link.className = 'heading-anchor';
+      link.href = '#' + heading.id;
+      link.setAttribute('aria-label', 'Link to this section');
+      link.textContent = '#';
+      heading.appendChild(link);
+    });
+
+    // Copy buttons on code blocks
+    document.querySelectorAll('.post-content div.highlighter-rouge').forEach(function (block) {
+      var button = document.createElement('button');
+      button.className = 'copy-btn';
+      button.type = 'button';
+      button.textContent = 'Copy';
+      button.addEventListener('click', function () {
+        var code = block.querySelector('pre code') || block.querySelector('pre');
+        navigator.clipboard.writeText(code.innerText).then(function () {
+          button.textContent = 'Copied';
+          button.classList.add('copied');
+          setTimeout(function () {
+            button.textContent = 'Copy';
+            button.classList.remove('copied');
+          }, 1600);
+        });
+      });
+      block.appendChild(button);
+    });
+  })();
+</script>

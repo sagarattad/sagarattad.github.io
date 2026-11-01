@@ -1,0 +1,15 @@
+# Projects shown on the Projects page. Add, remove or edit entries here.
+#   url:  main link (e.g. the GitHub repo)
+#   post: optional link to a blog post about the project
+#   note: optional short line under the description
+- name: "Grahavani"
+  icon: "🪐"
+  description: >-
+    A free, mobile-first Vedic astrology web app: Kundli with North Indian D1/D9 charts,
+    Yogas and Doshas with transparent ratings, Vimshottari Dasha, Kundli Milan and a Manglik
+    check, plus plain-language AI readings that are checked against the computed chart
+    before you see them.
+  note: "The live app is private while I finish testing; the code is open on GitHub."
+  tags: [Next.js, TypeScript, Gen AI, Postgres]
+  url: "https://github.com/sagarattad/grahavani"
+  post: "/blog/building-grahavani/"

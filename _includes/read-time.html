@@ -1,0 +1,12 @@
+{%- comment -%}
+  Uses `read_time` from front matter if set, otherwise estimates from word count.
+  Usage: {% include read-time.html post=post %}
+{%- endcomment -%}
+{%- if include.post.read_time -%}
+  {%- assign minutes = include.post.read_time -%}
+{%- else -%}
+  {%- assign words = include.post.content | strip_html | number_of_words -%}
+  {%- assign minutes = words | divided_by: 220 -%}
+  {%- if minutes < 1 -%}{%- assign minutes = 1 -%}{%- endif -%}
+{%- endif -%}
+{{ minutes }} min read

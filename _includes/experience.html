@@ -1,0 +1,14 @@
+{%- comment -%}
+  Years of experience since site.author.career_start ("YYYY-MM"), rounded down to the
+  nearest half year (e.g. 8.5). Calculated at build time; the script in the default
+  layout recalculates it in the browser so it stays current between builds.
+  Usage: {% include experience.html %}
+{%- endcomment -%}
+{%- assign start = site.author.career_start | split: "-" -%}
+{%- assign start_months = start[0] | times: 12 | plus: start[1] -%}
+{%- assign now_month = site.time | date: "%-m" -%}
+{%- assign now_months = site.time | date: "%Y" | times: 12 | plus: now_month -%}
+{%- assign half_years = now_months | minus: start_months | divided_by: 6 -%}
+{%- assign whole = half_years | divided_by: 2 -%}
+{%- assign half = half_years | modulo: 2 -%}
+<span class="experience" data-since="{{ site.author.career_start }}">{{ whole }}{% if half == 1 %}.5{% endif %}</span>

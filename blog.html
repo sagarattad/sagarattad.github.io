@@ -1,65 +1,58 @@
 ---
 layout: default
 title: Blog
+permalink: /blog/
 ---
 
-<div class="blog-header">
+<div class="page-header">
   <h1>Blog</h1>
   <p>Thoughts on SAP, tech, and life.</p>
 </div>
 
-<!-- Category Filter -->
-<div class="category-filter">
-  <button class="active" onclick="filterPosts('all')">All</button>
-  <button onclick="filterPosts('ABAP')">ABAP</button>
-  <button onclick="filterPosts('RAP')">RAP</button>
-  <button onclick="filterPosts('CDS')">CDS</button>
-  <button onclick="filterPosts('HANA')">HANA</button>
-  <button onclick="filterPosts('BTP')">BTP</button>
-  <button onclick="filterPosts('Career')">Career</button>
-  <button onclick="filterPosts('Tech')">Tech</button>
-  <button onclick="filterPosts('Life')">Life</button>
+<!-- Topic Filter -->
+<div class="chip-list topic-filter" role="group" aria-label="Filter by topic">
+  <button class="chip active" data-topic="all">All</button>
+  {% for topic in site.data.topics %}
+  <button class="chip" data-topic="{{ topic.slug }}">{{ topic.name }}</button>
+  {% endfor %}
 </div>
 
 <!-- Posts List -->
-<div class="post-list">
-  {% for post in site.posts %}
-  <article class="post-card" data-categories="{{ post.categories | join: ' ' }}">
-    <div class="post-tags">
-      {% for category in post.categories %}
-      <span class="tag">{{ category }}</span>
-      {% endfor %}
-    </div>
-    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-    <p class="post-meta">
-      {{ post.date | date: "%B %d, %Y" }}
-      {% if post.read_time %} · {{ post.read_time }} min read{% endif %}
-    </p>
-    <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 150 }}</p>
-  </article>
-  {% endfor %}
-  
-  {% if site.posts.size == 0 %}
-  <p style="color: var(--text-secondary);">Blog posts coming soon!</p>
-  {% endif %}
+<div class="blog-list">
+  {% include post-list.html posts=site.posts %}
+  <p class="no-results">Nothing here yet. Posts on this topic are coming soon.</p>
 </div>
 
 <script>
-  function filterPosts(category) {
-    // Update active button
-    const buttons = document.querySelectorAll('.category-filter button');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-    
-    // Filter posts
-    const posts = document.querySelectorAll('.post-card');
-    posts.forEach(post => {
-      const categories = post.getAttribute('data-categories');
-      if (category === 'all' || categories.includes(category)) {
-        post.style.display = 'block';
-      } else {
-        post.style.display = 'none';
-      }
+  (function () {
+    var buttons = document.querySelectorAll('.topic-filter .chip');
+    var posts = document.querySelectorAll('.blog-list .post-item');
+    var empty = document.querySelector('.blog-list .no-results');
+
+    function filterPosts(topic) {
+      var shown = 0;
+      buttons.forEach(function (btn) {
+        btn.classList.toggle('active', btn.dataset.topic === topic);
+      });
+      posts.forEach(function (post) {
+        var match = topic === 'all' || post.dataset.topics.split(' ').indexOf(topic) !== -1;
+        post.style.display = match ? '' : 'none';
+        if (match) shown++;
+      });
+      empty.style.display = shown === 0 ? 'block' : 'none';
+
+      var url = new URL(window.location);
+      if (topic === 'all') url.searchParams.delete('topic');
+      else url.searchParams.set('topic', topic);
+      history.replaceState(null, '', url);
+    }
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () { filterPosts(btn.dataset.topic); });
     });
-  }
+
+    var initial = new URLSearchParams(window.location.search).get('topic');
+    var known = Array.prototype.some.call(buttons, function (b) { return b.dataset.topic === initial; });
+    filterPosts(known ? initial : 'all');
+  })();
 </script>

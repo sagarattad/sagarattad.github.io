@@ -1,64 +1,41 @@
 ---
 layout: default
-title: Home
 ---
 
 <section class="hero">
-  <h1>Hi, I'm {{ site.author.first_name }} 👋</h1>
-  <p class="tagline">{{ site.tagline }}</p>
-  <p class="bio">{{ site.author.bio }}</p>
+  {% include avatar.html %}
+  <h1>Hi, I'm <em>{{ site.author.first_name }}</em>.</h1>
+  {%- capture experience %}{% include experience.html %}{% endcapture %}
+  <p class="bio">{{ site.author.bio | replace: "%experience%", experience }}</p>
+
+  <nav class="chip-list" aria-label="Topics">
+    {% for topic in site.data.topics %}
+    <a class="chip" href="{{ '/blog/' | relative_url }}?topic={{ topic.slug }}">{{ topic.name }}</a>
+    {% endfor %}
+  </nav>
 </section>
 
-<!-- Featured Posts -->
-<h2 class="section-title">Featured Posts</h2>
-<div class="post-list">
-  {% assign featured_posts = site.posts | where: "featured", true | limit: 2 %}
-  {% for post in featured_posts %}
-  <article class="post-card">
-    <div class="post-tags">
-      {% for category in post.categories %}
-      <span class="tag">{{ category }}</span>
-      {% endfor %}
-    </div>
-    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-    <p class="post-meta">
-      {{ post.date | date: "%B %d, %Y" }}
-      {% if post.read_time %} · {{ post.read_time }} min read{% endif %}
-    </p>
-    <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 150 }}</p>
-  </article>
-  {% endfor %}
-  
-  {% if featured_posts.size == 0 %}
-  <p style="color: var(--text-secondary);">Featured posts coming soon!</p>
-  {% endif %}
-</div>
+<section class="section">
+  <div class="section-header">
+    <h2 class="eyebrow">Writing</h2>
+    {% if site.posts.size > 0 %}<a href="{{ '/blog/' | relative_url }}">All posts →</a>{% endif %}
+  </div>
 
-<!-- Latest Posts -->
-<h2 class="section-title">Latest Posts</h2>
-<div class="post-list">
-  {% assign latest_posts = site.posts | limit: 3 %}
-  {% for post in latest_posts %}
-  <article class="post-card">
-    <div class="post-tags">
-      {% for category in post.categories %}
-      <span class="tag">{{ category }}</span>
-      {% endfor %}
+  {% if site.posts.size > 0 %}
+    {% assign latest_posts = site.posts | limit: 5 %}
+    {% include post-list.html posts=latest_posts %}
+  {% else %}
+    <div class="empty-state">
+      <h3>First posts are on the way.</h3>
+      <p>Here's what I'll be writing about:</p>
+      <ul class="topic-list">
+        {% for topic in site.data.topics %}
+        <li>
+          <a href="{{ '/blog/' | relative_url }}?topic={{ topic.slug }}">{{ topic.name }}</a>
+          <p>{{ topic.description }}</p>
+        </li>
+        {% endfor %}
+      </ul>
     </div>
-    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-    <p class="post-meta">
-      {{ post.date | date: "%B %d, %Y" }}
-      {% if post.read_time %} · {{ post.read_time }} min read{% endif %}
-    </p>
-    <p class="post-excerpt">{{ post.excerpt | strip_html | truncate: 150 }}</p>
-  </article>
-  {% endfor %}
-  
-  {% if latest_posts.size == 0 %}
-  <p style="color: var(--text-secondary);">Blog posts coming soon!</p>
   {% endif %}
-</div>
-
-<p style="margin-top: 30px;">
-  <a href="{{ '/blog' | relative_url }}">View all posts →</a>
-</p>
+</section>

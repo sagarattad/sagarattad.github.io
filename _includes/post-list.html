@@ -1,0 +1,29 @@
+{%- comment -%}
+  Editorial list of posts.
+  Usage: {% include post-list.html posts=site.posts %}
+{%- endcomment -%}
+<ol class="post-list">
+  {%- for post in include.posts %}
+  {%- capture post_topics -%}
+    {%- for topic in site.data.topics -%}
+      {%- for category in post.categories -%}
+        {%- if topic.categories contains category -%}{{ topic.slug }} {% break %}{%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  {%- endcapture %}
+  <li class="post-item" data-topics="{{ post_topics | strip }}">
+    <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+    <div>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+      <p class="post-excerpt">{{ post.description | default: post.excerpt | strip_html | strip | truncate: 180 }}</p>
+      <div class="post-meta">
+        {%- if post.featured %}<span class="featured-mark">★ Featured</span>{% endif %}
+        {%- if post.categories.size > 0 %}
+        <span class="tags">{% for category in post.categories %}<span class="tag">{{ category }}</span>{% endfor %}</span>
+        {%- endif %}
+        <span>{% include read-time.html post=post %}</span>
+      </div>
+    </div>
+  </li>
+  {%- endfor %}
+</ol>

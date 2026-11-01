@@ -1,0 +1,16 @@
+# Topics shown on the home page and as filters on the blog page.
+# A post belongs to a topic when any of its `categories` is listed here.
+- slug: sap
+  name: "SAP & ABAP"
+  description: "RAP, CDS, HANA, BTP and the craft of modern ABAP."
+  categories: [SAP, ABAP, RAP, CDS, HANA, BTP, Joule, Fiori]
+
+- slug: ai
+  name: "Gen AI"
+  description: "Building with LLMs: LangChain, Python, Claude and OpenAI."
+  categories: [AI, GenAI, "Gen AI", LLM, Claude, OpenAI, LangChain, Python, Tech]
+
+- slug: life
+  name: "Life"
+  description: "Career notes, lessons learned and everything in between."
+  categories: [Life, Career]

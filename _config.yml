@@ -11,9 +11,11 @@ author:
   first_name: "Sagar"
   email: "sagarattad8@gmail.com"
   github: "sagarattad"
-  linkedin: ""
+  linkedin: "sagar-attad-a5501a125"
   twitter: ""
-  bio: "I'm an SAP Technical Consultant with 8.5 years of experience. I explore modern SAP technologies like RAP and Joule, while also diving into Gen AI, building with tools like LangChain, Python, Claude, and OpenAI. I'm also a certified Claude Architect."
+  career_start: "2018-01"   # experience on the site is calculated from this (YYYY-MM)
+  # %experience% is replaced with the calculated years, e.g. 8.5
+  bio: "I'm an SAP Technical Consultant with %experience% years of experience. I explore modern SAP technologies like RAP and Joule, while also diving into Gen AI, building with tools like LangChain, Python, Claude, and OpenAI. I'm also a certified Claude Architect."
 
 # Build Settings
 # No GitHub Pages default theme (Primer) — its style.css would overwrite assets/css/style.css
@@ -22,26 +24,24 @@ markdown: kramdown
 highlighter: rouge
 permalink: /blog/:title/
 
-# Collections
-collections:
-  projects:
-    output: true
-    permalink: /projects/:name/
+# Social preview card (used by jekyll-seo-tag)
+twitter:
+  card: summary_large_image
 
 # Defaults
 defaults:
   - scope:
       path: ""
+    values:
+      image: /assets/images/og-image.png
+  - scope:
+      path: ""
       type: "posts"
     values:
       layout: "post"
-  - scope:
-      path: ""
-      type: "projects"
-    values:
-      layout: "project"
 
 # Plugins (GitHub Pages supported)
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-feed   # RSS/Atom feed at /feed.xml

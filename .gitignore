@@ -4,3 +4,6 @@ _site/
 .jekyll-metadata
 .bundle/
 vendor/
+
+# Claude Code app settings (local only)
+.claude/
