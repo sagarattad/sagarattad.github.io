@@ -2,7 +2,6 @@
 title: "Building Grahavani: An Astrology App Where the AI Isn't Allowed to Guess"
 description: "How I built a free Vedic astrology app on free tiers, and why every AI reading is checked against the chart before anyone sees it."
 categories: [AI, Next.js]
-featured: true
 ---
 
 Most astrology apps I tried fell into one of two camps. Either they buried a simple Kundli behind ads and paywalls, or they leaned on fear: a scary-sounding dosha, followed by a paid puja to "fix" it. I wanted something calmer. A free app that shows your chart clearly, explains it in plain language, and never tries to sell you anything.
@@ -87,6 +86,12 @@ Free tiers come with limits, so the design works around them:
 ## Privacy by default
 
 Birth details are personal, so the app collects as little as it can. No names go to the AI. Share links are long and unguessable, and every result has a Delete button. IP addresses are stored only as hashes. There's also a private mode, where only approved Google accounts can sign in. That's how it runs today while I finish testing.
+
+## Built with Claude Code
+
+I built Grahavani with the help of [Claude Code](https://claude.com/claude-code), Anthropic's AI coding assistant. I wrote the plan first: what the app should do, which free services to use, and the rules the AI readings must follow. Then I worked through it phase by phase with Claude Code, reviewing each change and testing it before moving on.
+
+It's a fitting partnership for this project. The app itself is about using AI where it helps while checking its work, and that's exactly how I used AI to build it.
 
 ## What I learned
 
