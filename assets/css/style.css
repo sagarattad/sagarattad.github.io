@@ -1220,6 +1220,38 @@ button.chip.active {
   margin: 48px 0 18px;
 }
 
+.about-body .built-list {
+  list-style: none;
+  margin-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.about-body .built-list li {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.about-body .built-list strong {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.about-body .skill-group {
+  margin: 24px 0 12px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
 /* ================================
    Contact Page
    ================================ */
