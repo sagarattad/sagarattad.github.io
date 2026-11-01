@@ -15,6 +15,17 @@
   --tag-bg: #e8f4f8;
   --tag-text: #0077b6;
   --code-bg: #f6f8fa;
+
+  /* Syntax Highlighting */
+  --syntax-comment: #6a737d;
+  --syntax-keyword: #d73a49;
+  --syntax-string: #032f62;
+  --syntax-number: #005cc5;
+  --syntax-function: #6f42c1;
+  --syntax-type: #e36209;
+  --syntax-tag: #22863a;
+  --syntax-deleted-bg: #ffeef0;
+  --syntax-inserted-bg: #e6ffed;
 }
 
 [data-theme="dark"] {
@@ -31,6 +42,17 @@
   --tag-bg: #0d3d4d;
   --tag-text: #00b4d8;
   --code-bg: #2d2d44;
+
+  /* Syntax Highlighting */
+  --syntax-comment: #8b8ba7;
+  --syntax-keyword: #ff7b72;
+  --syntax-string: #a5d6ff;
+  --syntax-number: #79c0ff;
+  --syntax-function: #d2a8ff;
+  --syntax-type: #ffa657;
+  --syntax-tag: #7ee787;
+  --syntax-deleted-bg: #4a1f2a;
+  --syntax-inserted-bg: #1f3d2a;
 }
 
 /* ================================
@@ -561,6 +583,56 @@ main {
   padding: 0;
   font-size: 0.9rem;
   line-height: 1.6;
+}
+
+/* ================================
+   Syntax Highlighting (Rouge)
+   ================================ */
+.highlight .c, .highlight .c1, .highlight .cm, .highlight .cs, .highlight .cd,
+.highlight .ch, .highlight .cpf {
+  color: var(--syntax-comment);
+  font-style: italic;
+}
+
+.highlight .cp, .highlight .k, .highlight .kc, .highlight .kd, .highlight .kn,
+.highlight .kp, .highlight .kr, .highlight .kv, .highlight .ow {
+  color: var(--syntax-keyword);
+}
+
+.highlight .s, .highlight .s1, .highlight .s2, .highlight .sa, .highlight .sb,
+.highlight .sc, .highlight .sd, .highlight .se, .highlight .sh, .highlight .si,
+.highlight .sx, .highlight .sr, .highlight .ss, .highlight .dl {
+  color: var(--syntax-string);
+}
+
+.highlight .m, .highlight .mb, .highlight .mf, .highlight .mh, .highlight .mi,
+.highlight .il, .highlight .mo, .highlight .mx, .highlight .no, .highlight .bp,
+.highlight .vc, .highlight .vg, .highlight .vi {
+  color: var(--syntax-number);
+}
+
+.highlight .nf, .highlight .fm, .highlight .nc, .highlight .ne, .highlight .nd {
+  color: var(--syntax-function);
+}
+
+.highlight .kt, .highlight .nb, .highlight .na, .highlight .nl {
+  color: var(--syntax-type);
+}
+
+.highlight .nt, .highlight .gh, .highlight .gu {
+  color: var(--syntax-tag);
+}
+
+.highlight .gd {
+  background-color: var(--syntax-deleted-bg);
+}
+
+.highlight .gi {
+  background-color: var(--syntax-inserted-bg);
+}
+
+.highlight .err {
+  color: inherit;
 }
 
 .post-content blockquote {
