@@ -1,12 +1,15 @@
 {%- comment -%}
-  Shows assets/images/profile.jpg if it exists, otherwise your initials.
-  Usage: {% include avatar.html size="lg" %}   (size: sm | lg | omit for default)
+  Shows a photo if it exists, otherwise your initials.
+  Usage: {% include avatar.html size="lg" photo="/assets/images/profile-about.jpg" %}
+    size:  sm | lg | omit for default
+    photo: optional; defaults to /assets/images/profile.jpg
 {%- endcomment -%}
-{%- assign profile = site.static_files | where: "path", "/assets/images/profile.jpg" | first -%}
+{%- assign photo_path = include.photo | default: "/assets/images/profile.jpg" -%}
+{%- assign photo = site.static_files | where: "path", photo_path | first -%}
 {%- assign size_class = "" -%}
 {%- if include.size -%}{%- assign size_class = "avatar-" | append: include.size -%}{%- endif -%}
-{%- if profile -%}
-<img src="{{ '/assets/images/profile.jpg' | relative_url }}" alt="{{ site.author.name }}" class="avatar {{ size_class }}">
+{%- if photo -%}
+<img src="{{ photo_path | relative_url }}" alt="{{ site.author.name }}" class="avatar {{ size_class }}">
 {%- else -%}
 {%- assign name_parts = site.author.name | split: " " -%}
 <span class="avatar avatar-initials {{ size_class }}" role="img" aria-label="{{ site.author.name }}">{{ name_parts.first | slice: 0 }}{{ name_parts.last | slice: 0 }}</span>

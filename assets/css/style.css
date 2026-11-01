@@ -388,8 +388,8 @@ main .container > .progress-bar {
 }
 
 .avatar.avatar-lg {
-  width: 112px;
-  height: 112px;
+  width: 260px;
+  height: 260px;
 }
 
 .avatar-lg.avatar-initials {
@@ -468,6 +468,8 @@ button.chip.active {
 }
 
 .hero .avatar {
+  width: 125px;
+  height: 125px;
   margin-bottom: 28px;
 }
 

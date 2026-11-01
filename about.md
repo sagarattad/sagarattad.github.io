@@ -5,7 +5,7 @@ permalink: /about/
 ---
 
 <div class="about-header">
-  {% include avatar.html size="lg" %}
+  {% include avatar.html size="lg" photo="/assets/images/profile-about.jpg" %}
   <div>
     <h1>{{ site.author.name }}</h1>
     <p class="title">SAP Technical Consultant · Claude Certified Architect</p>
