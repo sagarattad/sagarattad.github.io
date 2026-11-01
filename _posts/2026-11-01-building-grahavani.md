@@ -85,7 +85,7 @@ Free tiers come with limits, so the design works around them:
 
 ## Privacy by default
 
-Birth details are personal, so the app collects as little as it can. No names go to the AI. Share links are long and unguessable, and every result has a Delete button. IP addresses are stored only as hashes. There's also a private mode, where only approved Google accounts can sign in. That's how it runs today while I finish testing.
+Birth details are personal, so the app collects as little as it can. No names go to the AI. Share links are long and unguessable, and every result has a Delete button. IP addresses are stored only as hashes. The app also has a private mode, where only approved Google accounts can sign in, and that's how I run it.
 
 ## Built with Claude Code
 
@@ -101,8 +101,6 @@ It's a fitting partnership for this project. The app itself is about using AI wh
 4. **Free tiers are enough if you design for them.** Caching and rate limiting were part of the plan from day one, not something bolted on later.
 5. **Tests pay for themselves.** More than 200 unit tests, from chart placement to the AI validator, let me rework the whole interpretation layer several times without breaking it.
 
-## What's next
-
-Before a public launch I still want to finish cross-checking Gun Milan scores against other well-known sites, and confirm with Kundlit that production use is fine. After that: a Hindi interface and readings, and a mode for people who don't know their exact birth time.
+---
 
 The code is open on [GitHub](https://github.com/sagarattad/grahavani). If you work on astrology software, or on keeping LLMs honest in any domain, I'd love to hear from you.

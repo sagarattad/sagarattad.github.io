@@ -9,7 +9,7 @@
     Yogas and Doshas with transparent ratings, Vimshottari Dasha, Kundli Milan and a Manglik
     check, plus plain-language AI readings that are checked against the computed chart
     before you see them.
-  note: "The live app is private while I finish testing; the code is open on GitHub."
+  note: "The live app is private (invite-only); the code is open on GitHub."
   tags: [Next.js, TypeScript, Gen AI, Postgres]
   url: "https://github.com/sagarattad/grahavani"
   post: "/blog/building-grahavani/"
